@@ -107,7 +107,7 @@ The business calculation engine (`server/utils/calculator.js` & `client/src/util
 |---|---|
 | **Frontend** | React 19, Vite, Custom CSS Utility System (no external CSS framework), Lucide Icons |
 | **Backend** | Node.js, Express.js |
-| **Database** | Dual-Mode: MongoDB (Mongoose) + Embedded JSON File Fallback Store |
+| **Database** | Local JSON file store (active persistence layer); MongoDB/Mongoose integration is scaffolded but is **not** the active database implementation |
 | **Authentication** | JSON Web Tokens (JWT), Bcrypt.js |
 | **AI Integration** | Google Gemini 1.5 Flash API / OpenAI GPT-4o-mini / Offline Rule Engine |
 | **Testing** | Node.js Native Test Runner (`node --test`) |
@@ -154,7 +154,7 @@ Food Production Cost Optimizer/
 ### Quick Start (Zero-Config)
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/food-production-cost-optimizer.git
+   git clone https://github.com/Fafda-Jalebi/food-production-cost-optimizer.git
    cd "Food Production Cost Optimizer"
    ```
 
@@ -216,16 +216,24 @@ Food Production Cost Optimizer/
 
 ## 🌐 Deployment Guide
 
-### Frontend Deployment (Vercel / Netlify)
-1. Set Build Command: `npm run build`
-2. Output Directory: `dist`
-3. The client calls the backend through the relative `/api` path. In development this is proxied by Vite (`client/vite.config.js`) to `http://localhost:5000`. For production hosting, serve the built `dist/` from the same origin as the API, or configure a reverse proxy / rewrite so that `/api/*` requests are forwarded to the Node backend (which should serve `client/dist` as static files if hosting from one origin).
+### Single-Origin Production Deployment (Current Architecture)
+The Express backend serves the production React build from `client/dist`, so the frontend and the `/api` endpoints are hosted from the **same origin** — no separate frontend host, reverse proxy, or CORS setup is required.
 
-### Backend Deployment (Render / Railway)
-1. Root Directory: `server`
-2. Build Command: `npm install`
-3. Start Command: `node server.js`
-4. Set Environment Variables: `JWT_SECRET`, `GEMINI_API_KEY`, `MONGODB_URI`.
+1. **Install dependencies** (at the repository root):
+   ```bash
+   npm install && npm run build
+   ```
+2. **Start the server**:
+   ```bash
+   npm start
+   ```
+3. The application is then available on the same origin as the API (default `http://localhost:5000`): any non-API route returns the built frontend (`client/dist`), while `/api/*` requests are handled by the Express backend. If `client/dist` has not been built, the server runs API-only and logs a warning.
+
+### Alternative Architecture: Separate Frontend Hosting (Optional)
+If you prefer to host the frontend separately (e.g. Vercel / Netlify), the client calls the backend through the relative `/api` path. In development this is proxied by Vite (`client/vite.config.js`) to `http://localhost:5000`; in production you must configure a reverse proxy / rewrite so that `/api/*` requests are forwarded to the Node backend. This is an alternative to the default single-origin deployment and requires additional origin/CORS configuration.
+
+### Environment Variables
+Set `JWT_SECRET`, and optionally `GEMINI_API_KEY` for the AI Advisor. `MONGODB_URI` is optional — MongoDB is only activated if provided; without it the application uses the local JSON file store.
 
 ---
 
