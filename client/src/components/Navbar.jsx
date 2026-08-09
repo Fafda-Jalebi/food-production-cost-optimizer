@@ -30,11 +30,11 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
               <Factory className="w-6 h-6 text-black stroke-[2.5]" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 whitespace-nowrap">
                 <span className="font-heading font-extrabold text-lg text-white tracking-tight">
                   FOOD<span className="text-emerald-400">COST</span>
                 </span>
-                <span className="badge badge-emerald text-[10px]">OPTIMIZER v1.0</span>
+                <span className="badge badge-emerald text-[10px] shrink-0 whitespace-nowrap">OPTIMIZER v1.0</span>
               </div>
               <p className="text-[11px] text-gray-400 font-medium">Food Processing Economics Platform</p>
             </div>
@@ -44,7 +44,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           <nav className="hidden lg:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-xl border border-gray-800">
             <button
               onClick={() => setActiveTab('landing')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
                 activeTab === 'landing' 
                   ? 'bg-emerald-500 text-black shadow-md' 
                   : 'text-gray-400 hover:text-white hover:bg-gray-800/60'
@@ -61,7 +61,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
                     isActive 
                       ? 'bg-emerald-500 text-black shadow-md' 
                       : 'text-gray-400 hover:text-white hover:bg-gray-800/60'
@@ -75,7 +75,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           </nav>
 
           {/* User Profile / Auth Action */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             {user ? (
               <div className="flex items-center gap-2">
                 <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-gray-800/80 border border-gray-700 text-xs max-w-[240px]">
@@ -87,7 +87,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
                 </div>
                 <button 
                   onClick={onLogout}
-                  className="btn btn-secondary text-xs p-2 sm:px-3 sm:py-1.5"
+                  className="btn btn-secondary text-xs p-2 sm:px-3 sm:py-1.5 shrink-0 whitespace-nowrap"
                   title="Logout"
                 >
                   <LogOut className="w-4 h-4" />
