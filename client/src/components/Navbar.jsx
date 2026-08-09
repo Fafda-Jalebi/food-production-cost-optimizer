@@ -77,12 +77,12 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           {/* User Profile / Auth Action */}
           <div className="flex items-center gap-3">
             {user ? (
-              <div className="flex items-center gap-3">
-                <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800/80 border border-gray-700 text-xs">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <div>
-                    <span className="font-semibold text-white block leading-tight">{user.name}</span>
-                    <span className="text-[10px] text-gray-400 block leading-tight">{user.companyName || 'Operations Manager'}</span>
+              <div className="flex items-center gap-2">
+                <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-gray-800/80 border border-gray-700 text-xs max-w-[240px]">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 self-center" />
+                  <div className="min-w-0 flex-1">
+                    <span className="font-semibold text-white block leading-tight truncate">{user.name}</span>
+                    <span className="text-[10px] text-gray-400 block leading-tight truncate">{user.companyName || 'Operations Manager'}</span>
                   </div>
                 </div>
                 <button 
