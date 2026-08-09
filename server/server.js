@@ -36,8 +36,17 @@ if (fs.existsSync(CLIENT_DIST)) {
   app.use(express.static(CLIENT_DIST));
 
   // SPA fallback: any non-API GET returns the client index.html so client-side
-  // routes work when hosted from this single origin.
+  // routes work when hosted from this single origin. Requests that look like
+  // missing static assets (a path ending in a file extension) must return 404
+  // instead of index.html: if a browser/edge still serves a stale index.html
+  // that references an older build's hashed filenames, the browser would receive
+  // HTML where it expects CSS/JS and the UI silently renders unstyled.
   app.get('*', (req, res) => {
+    const lastSegment = req.path.split('/').pop() || '';
+    const looksLikeAsset = /\.[a-z0-9]+$/i.test(lastSegment);
+    if (looksLikeAsset) {
+      return res.status(404).send('Not Found');
+    }
     res.sendFile(path.join(CLIENT_DIST, 'index.html'));
   });
 
