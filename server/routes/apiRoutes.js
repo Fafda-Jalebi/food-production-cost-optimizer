@@ -130,7 +130,7 @@ router.post('/optimizer/analyze', (req, res) => {
 // 3. AI ADVISOR ENDPOINT
 // ==========================================
 
-router.post('/ai/advisor', async (req, res) => {
+router.post('/ai/advisor', authMiddleware, async (req, res) => {
   try {
     const { question, batchData } = req.body;
     if (!question) {
