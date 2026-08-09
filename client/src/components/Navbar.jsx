@@ -41,7 +41,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           </div>
 
           {/* Navigation Links (Desktop) */}
-          <nav className="hidden xl:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-xl border border-gray-800">
+          <nav className="hidden xl:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-xl border border-gray-800 min-w-0">
             <button
               onClick={() => setActiveTab('landing')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
@@ -75,7 +75,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           </nav>
 
           {/* User Profile / Auth Action */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-3 shrink-0 ml-auto">
             {user ? (
               <div className="flex items-center gap-2">
                 <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-gray-800/80 border border-gray-700 text-xs max-w-[240px]">
