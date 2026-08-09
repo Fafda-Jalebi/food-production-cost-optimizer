@@ -1,6 +1,6 @@
 # Food Production Cost Optimizer 🍲📊
 
-A full-stack, enterprise-grade decision-support and analytics platform designed for food manufacturers, food processing businesses, production managers, and food technology engineers to calculate, simulate, forecast, and optimize the unit economics of producing food products.
+A full-stack decision-support and analytics platform designed for food manufacturers, production managers, and food technology professionals to calculate, simulate, forecast, and optimize food production costs.
 
 ---
 
@@ -36,12 +36,12 @@ The **Food Production Cost Optimizer** solves these challenges by combining a **
 ### 3. 💡 Production Optimization Engine
 - Algorithmic evaluation of batch composition.
 - Detects high single-ingredient concentration risks (>20% total cost share), excessive wastage loss (>5%), packaging over-expenditure (>18%), and sub-optimal profit margins (<15%).
-- Generates data-backed, understandable cost-saving recommendations with estimated minimum and maximum savings ranges without fabricated numbers.
+- Generates data-backed cost-saving recommendations with estimated minimum and maximum savings ranges.
 
 ### 4. 🤖 AI Production Cost Advisor
 - Natural language query interface allowing users to ask operational questions ("How can I reduce unit cost?", "Why is my cost high?", "How to achieve 25% margin?").
 - Context-aware: Automatically feeds structured active batch parameters to Google Gemini / OpenAI LLM APIs.
-- Includes a **deterministic rule-based offline fallback engine** when API keys are omitted, ensuring 100% crash-proof demo execution.
+- Includes a **deterministic rule-based offline fallback engine** so the app keeps working when API keys are omitted.
 
 ### 5. 📈 Time-Series Cost Forecasting
 - Forecasts future production unit costs using **Holt's Double Exponential Smoothing** and **Linear Trend Regression**.
@@ -241,4 +241,6 @@ Set `JWT_SECRET`, and optionally `GEMINI_API_KEY` for the AI Advisor (the app gr
 ---
 
 ## 📜 License
-MIT License. Built as an autonomous senior portfolio engineering project.
+MIT License
+
+Developed as a personal portfolio project.
