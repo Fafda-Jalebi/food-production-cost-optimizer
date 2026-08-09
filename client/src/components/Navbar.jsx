@@ -41,7 +41,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           </div>
 
           {/* Navigation Links (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-xl border border-gray-800">
+          <nav className="hidden xl:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-xl border border-gray-800">
             <button
               onClick={() => setActiveTab('landing')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
@@ -109,7 +109,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
       </div>
 
       {/* Mobile Horizontal Sub-Navbar */}
-      <div className="lg:hidden flex items-center gap-2 px-4 py-2 bg-gray-900 border-t border-gray-800 overflow-x-auto no-scrollbar">
+      <div className="xl:hidden flex items-center gap-2 px-4 py-2 bg-gray-900 border-t border-gray-800 overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveTab('landing')}
           className={`flex items-center gap-1 px-3 py-1 rounded-md text-xs font-semibold shrink-0 ${
