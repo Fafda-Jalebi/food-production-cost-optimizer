@@ -1,0 +1,13 @@
+{
+  "name": "food-production-cost-optimizer-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Food Production Cost Optimizer - Full Stack Decision Support System",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "test": "npm run test --prefix server",
+    "build": "npm run build --prefix client"
+  }
+}

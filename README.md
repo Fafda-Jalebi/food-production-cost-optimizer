@@ -1,0 +1,226 @@
+# Food Production Cost Optimizer 🍲📊
+
+A full-stack, enterprise-grade decision-support and analytics platform designed for food manufacturers, food processing businesses, production managers, and food technology engineers to calculate, simulate, forecast, and optimize the unit economics of producing food products.
+
+---
+
+## 🎯 Problem Statement & Executive Overview
+
+In industrial food processing, determining unit profitability is complex due to:
+1. **Unpredictable Raw Material Price Volatility**: Commodity price fluctuations (e.g. fruit pulp, vegetable oils, sugar).
+2. **Process Loss & Yield Giveaway**: Thermal evaporation, kettle residue, spilling, and packaging overfill.
+3. **High Overhead & Energy Costs**: Steam heating, flash pasteurization, cold storage, and plant depreciation.
+4. **Complexity in Scenario Testing**: Lack of immediate feedback when testing "What-If" scenarios before committing to multi-ton production batches.
+
+The **Food Production Cost Optimizer** solves these challenges by combining a **deterministic mathematical calculation engine**, a **dual-scenario What-If sandbox**, an **algorithmic cost-reduction optimizer**, a **statistical cost forecasting engine**, and a **context-aware AI advisor**.
+
+---
+
+## ✨ Key Features
+
+### 1. 🧮 Production Cost Calculator
+- Multi-ingredient formulation table with live unit price line-item summation.
+- Categorized cost inputs: Packaging, Direct Labour, Electricity/Energy, Water Utilities, Transportation/Logistics, Fixed Plant Overheads, and Expected Wastage Loss (%).
+- Instant precision output: Total Production Cost, Cost per Batch, Cost per Sellable Unit (kg/L/pack), Gross Profit, Gross Margin %, ROI %, and Contribution Margin.
+
+### 2. ⚡ What-If Scenario Simulator
+- Dual-column comparison: **Current Baseline Batch** vs **Simulated Scenario**.
+- Interactive sliders for:
+  - Ingredient price variance (-30% to +50%)
+  - Process wastage rate shift (-5% to +10%)
+  - Production batch scale multiplier (-50% to +200%)
+  - Packaging, labour, energy adjustments
+  - Target selling price repositioning
+- Dynamic delta metrics displaying exact cash impact, unit cost shift, net profit change, and margin point variance.
+
+### 3. 💡 Production Optimization Engine
+- Algorithmic evaluation of batch composition.
+- Detects high single-ingredient concentration risks (>20% total cost share), excessive wastage loss (>5%), packaging over-expenditure (>18%), and sub-optimal profit margins (<15%).
+- Generates data-backed, understandable cost-saving recommendations with estimated minimum and maximum savings ranges without fabricated numbers.
+
+### 4. 🤖 AI Production Cost Advisor
+- Natural language query interface allowing users to ask operational questions ("How can I reduce unit cost?", "Why is my cost high?", "How to achieve 25% margin?").
+- Context-aware: Automatically feeds structured active batch parameters to Google Gemini / OpenAI LLM APIs.
+- Includes a **deterministic rule-based offline fallback engine** when API keys are omitted, ensuring 100% crash-proof demo execution.
+
+### 5. 📈 Time-Series Cost Forecasting
+- Forecasts future production unit costs using **Holt's Double Exponential Smoothing** and **Linear Trend Regression**.
+- Computes 95% confidence intervals and standard errors.
+- Visual time-series bar plot comparing historical actuals against 6-month predictive projections.
+- CSV export functionality.
+
+### 6. 🚚 Supplier Landed Cost Analysis
+- Multi-supplier quote comparison matrix.
+- Calculates **Net Effective Landed Unit Cost** = Base Unit Price + Transport Logistics Cost per Unit.
+- Evaluates Lead Time (days), Minimum Order Quantity (MOQ), Quality Rating (1-5 stars), and Reliability Score (%).
+
+### 7. 📦 Batch Management & Comparison
+- Complete CRUD operations for production batches.
+- Batch cloning/duplication for fast scenario creation.
+- Pre-loaded industry recipe presets: *Mango Jam, Tomato Ketchup, Butter Biscuits, Tropical Fruit Juice, Raw Mango Pickle*.
+- Side-by-side **Batch A vs Batch B** comparative audit tool.
+
+### 8. 🔒 Security & Authentication
+- JWT token-based authentication with secure password hashing (`bcryptjs`).
+- "One-Click Guest Demo" mode for instant evaluation without registration.
+- Environment variable protection with zero hardcoded credentials.
+
+---
+
+## 📐 Mathematical Formulas & Calculation Engine
+
+The business calculation engine (`server/utils/calculator.js` & `client/src/utils/calculator.js`) follows standardized industrial food engineering formulas:
+
+1. **Raw Material Cost**:
+   $$\text{Raw Material Cost} = \sum_{i=1}^{n} (\text{Quantity}_i \times \text{Unit Price}_i)$$
+
+2. **Direct Production Cost**:
+   $$\text{Direct Cost} = \text{Raw Materials} + \text{Packaging} + \text{Labour} + \text{Energy} + \text{Water} + \text{Logistics}$$
+
+3. **Wastage Cost**:
+   $$\text{Wastage Cost} = \text{Direct Cost} \times \left( \frac{\text{Wastage \%}}{100} \right)$$
+
+4. **Total Production Cost**:
+   $$\text{Total Cost} = \text{Direct Cost} + \text{Wastage Cost} + \text{Fixed Overhead}$$
+
+5. **Sellable Net Quantity**:
+   $$\text{Sellable Quantity} = \text{Batch Quantity} \times \left( 1 - \frac{\text{Wastage \%}}{100} \right)$$
+
+6. **Unit Production Cost**:
+   $$\text{Cost Per Unit} = \frac{\text{Total Production Cost}}{\text{Sellable Quantity}}$$
+
+7. **Gross Profit & Margin**:
+   $$\text{Gross Profit} = \text{Total Revenue} - \text{Total Production Cost}$$
+   $$\text{Profit Margin \%} = \left( \frac{\text{Gross Profit}}{\text{Total Revenue}} \right) \times 100$$
+
+8. **Break-Even Volume & Price**:
+   $$\text{Contribution Margin / Unit} = \text{Selling Price} - \text{Variable Cost / Unit}$$
+   $$\text{Break-Even Quantity} = \left\lceil \frac{\text{Fixed Overhead}}{\text{Contribution Margin / Unit}} \right\rceil$$
+   $$\text{Break-Even Selling Price} = \frac{\text{Total Production Cost}}{\text{Sellable Quantity}}$$
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | React 19, Vite, Tailwind CSS / Vanilla Utility System, Lucide Icons, Chart.js |
+| **Backend** | Node.js, Express.js |
+| **Database** | Dual-Mode: MongoDB (Mongoose) + Embedded JSON File Fallback Store |
+| **Authentication** | JSON Web Tokens (JWT), Bcrypt.js |
+| **AI Integration** | Google Gemini 1.5 Flash API / OpenAI GPT-4o-mini / Offline Rule Engine |
+| **Testing** | Node.js Native Test Runner (`node --test`) |
+
+---
+
+## 📂 Project Structure
+
+```
+Food Production Cost Optimizer/
+├── client/                     # Vite + React Frontend
+│   ├── src/
+│   │   ├── components/         # Navbar, AuthModal
+│   │   ├── pages/              # LandingPage, Dashboard, Calculator, WhatIfSimulator, Optimizer, AIAdvisor, Forecasting, SupplierAnalysis, BatchManager
+│   │   ├── utils/              # Client Calculator, Optimizer Engine, Forecast Engine, Sample Data Presets
+│   │   ├── App.jsx             # Main Routing & Application Engine
+│   │   ├── main.jsx
+│   │   └── index.css           # Styling System & Glassmorphism Design Tokens
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
+├── server/                     # Node.js + Express Backend
+│   ├── config/                 # Database Configuration
+│   ├── middleware/             # Auth Middleware & Validation
+│   ├── routes/                 # Express API Endpoint Routes
+│   ├── tests/                  # Backend Unit Tests (`calculator.test.js`)
+│   ├── utils/                  # Server Calculator, Optimizer Engine, Forecast Engine, AI Engine, DB Fallback
+│   ├── data/                   # Persistent Local JSON Backup Store
+│   ├── server.js               # Express Server Entrypoint
+│   └── package.json
+├── package.json                # Root Scripts (npm start, npm run dev, npm test)
+├── .env.example                # Sample Environment Variables
+├── .gitignore                  # Git Exclusions
+└── README.md
+```
+
+---
+
+## ⚙️ Installation & Running Locally
+
+### Prerequisites
+- **Node.js**: v18.0.0 or higher
+- **NPM**: v9.0.0 or higher
+
+### Quick Start (Zero-Config)
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-username/food-production-cost-optimizer.git
+   cd "Food Production Cost Optimizer"
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   cd server && npm install
+   cd ../client && npm install
+   cd ..
+   ```
+
+3. **Configure Environment Variables**:
+   Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Run Unit Tests**:
+   ```bash
+   npm test
+   ```
+
+5. **Start the Application**:
+   - To start the backend API server:
+     ```bash
+     npm run server
+     ```
+   - To start the frontend development client:
+     ```bash
+     npm run client
+     ```
+   - Access the web interface at `http://localhost:3000` (API running at `http://localhost:5000`).
+
+---
+
+## 📡 API Overview
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/auth/register` | Register a new user account |
+| `POST` | `/api/auth/login` | Authenticate user & return JWT token |
+| `POST` | `/api/calculate` | Calculate complete batch economics |
+| `POST` | `/api/whatif/simulate` | Execute side-by-side What-If simulation |
+| `POST` | `/api/optimizer/analyze` | Run algorithmic cost optimization audit |
+| `POST` | `/api/ai/advisor` | Query AI Advisor with structured batch context |
+| `GET` | `/api/batches` | Retrieve saved production batches |
+| `POST` | `/api/batches` | Save a new production batch |
+| `GET` | `/api/forecast` | Retrieve time-series cost forecast |
+| `GET` | `/api/suppliers` | Retrieve multi-supplier landed cost comparison |
+
+---
+
+## 🌐 Deployment Guide
+
+### Frontend Deployment (Vercel / Netlify)
+1. Set Build Command: `npm run build`
+2. Output Directory: `dist`
+3. Set Environment Variable: `VITE_API_URL` pointing to backend API server.
+
+### Backend Deployment (Render / Railway)
+1. Root Directory: `server`
+2. Build Command: `npm install`
+3. Start Command: `node server.js`
+4. Set Environment Variables: `JWT_SECRET`, `GEMINI_API_KEY`, `MONGODB_URI`.
+
+---
+
+## 📜 License
+MIT License. Built as an autonomous senior portfolio engineering project.
