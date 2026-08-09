@@ -4,6 +4,7 @@ import {
   TrendingUp, Truck, ShieldCheck, DollarSign, PieChart, Activity, Cpu, Play
 } from 'lucide-react';
 import { formatCurrency, calculateBatchEconomics } from '../utils/calculator';
+import { SAMPLE_BATCH_PRESETS } from '../utils/sampleData';
 
 export default function LandingPage({ onLaunchApp, onSelectPreset }) {
   // Interactive mini-calculator state on landing page
@@ -318,35 +319,34 @@ export default function LandingPage({ onLaunchApp, onSelectPreset }) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { name: 'Mango Jam', cat: 'Preserves', qty: '1000 kg', unitCost: '₹139.53/kg', margin: '12.8%' },
-              { name: 'Tomato Ketchup', cat: 'Sauces', qty: '2000 kg', unitCost: '₹80.44/kg', margin: '26.9%' },
-              { name: 'Butter Biscuits', cat: 'Bakery', qty: '500 kg', unitCost: '₹176.65/kg', margin: '19.7%' },
-            ].map((p, idx) => (
-              <div key={idx} className="card bg-gray-900 border-gray-800 p-5 space-y-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">{p.cat}</span>
-                    <h4 className="text-lg font-bold text-white">{p.name}</h4>
+            {SAMPLE_BATCH_PRESETS.slice(0, 3).map((p, idx) => {
+              const eco = calculateBatchEconomics(p);
+              return (
+                <div key={p.id} className="card bg-gray-900 border-gray-800 p-5 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">{p.productCategory}</span>
+                      <h4 className="text-lg font-bold text-white">{p.productName}</h4>
+                    </div>
+                    <span className="badge badge-cyan">{p.batchQuantity} {p.unitOfMeasure}</span>
                   </div>
-                  <span className="badge badge-cyan">{p.qty}</span>
+                  <div className="flex justify-between text-xs pt-2 border-t border-gray-800">
+                    <span className="text-gray-400">Unit Production Cost:</span>
+                    <span className="font-bold text-white">₹{eco.costPerUnit} / {p.unitOfMeasure}</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-400">Gross Margin:</span>
+                    <span className={`font-bold ${eco.profitMarginPercentage >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>{eco.profitMarginPercentage}%</span>
+                  </div>
+                  <button
+                    onClick={() => onSelectPreset(p)}
+                    className="w-full btn btn-secondary text-xs mt-2 py-2"
+                  >
+                    Load Model in Calculator
+                  </button>
                 </div>
-                <div className="flex justify-between text-xs pt-2 border-t border-gray-800">
-                  <span className="text-gray-400">Unit Production Cost:</span>
-                  <span className="font-bold text-white">{p.unitCost}</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-gray-400">Gross Margin:</span>
-                  <span className="font-bold text-emerald-400">{p.margin}</span>
-                </div>
-                <button
-                  onClick={() => onLaunchApp('calculator')}
-                  className="w-full btn btn-secondary text-xs mt-2 py-2"
-                >
-                  Load Model in Calculator
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { LogIn, UserPlus, ShieldCheck, Lock, Mail, Building, User } from 'lucide-react';
 
 export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
-  if (!isOpen) return null;
-
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,6 +9,8 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   const [companyName, setCompanyName] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,9 +42,9 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   const handleGuestLogin = () => {
     const guestUser = {
       id: 'user_guest',
-      name: 'Guest Operations Manager',
+      name: 'DEMO Guest',
       email: 'guest@demo.com',
-      companyName: 'Demo Foods Corp'
+      companyName: 'Demo Foods Corp (Sample Data)'
     };
     onLoginSuccess('guest_jwt_token_demo_mode', guestUser);
     onClose();
@@ -137,13 +137,16 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
           </button>
         </form>
 
-        <div className="relative border-t border-gray-800 pt-4 text-center">
-          <span className="text-xs text-gray-500 block mb-3">Or explore instantly without signing up:</span>
+        <div className="relative border-t border-gray-800 pt-4 text-center space-y-3">
+          <div className="space-y-1">
+            <span className="text-[10px] uppercase tracking-widest text-amber-400 font-bold block">DEMO Access</span>
+            <p className="text-xs text-gray-500">No account or sign-up needed. DEMO mode loads sample data only — it does not create a real user account.</p>
+          </div>
           <button
             onClick={handleGuestLogin}
-            className="w-full btn btn-secondary py-2 text-xs border-emerald-500/30 text-emerald-400 hover:bg-emerald-950/40"
+            className="w-full btn btn-secondary py-2 text-xs border-amber-500/40 text-amber-300 hover:bg-amber-950/40"
           >
-            ⚡ One-Click Guest Demo Login
+            ⚡ Enter DEMO Mode (Sample Data)
           </button>
         </div>
 

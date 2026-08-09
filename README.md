@@ -48,6 +48,7 @@ The **Food Production Cost Optimizer** solves these challenges by combining a **
 - Computes 95% confidence intervals and standard errors.
 - Visual time-series bar plot comparing historical actuals against 6-month predictive projections.
 - CSV export functionality.
+- Without a real batch history the app shows a clearly labeled **Sample Demo Dataset** (12 months of believable monthly history for **Premium Mango Jam**); it is marked as DEMO/sample data in the UI and is not real production records.
 
 ### 6. 🚚 Supplier Landed Cost Analysis
 - Multi-supplier quote comparison matrix.
@@ -62,8 +63,8 @@ The **Food Production Cost Optimizer** solves these challenges by combining a **
 
 ### 8. 🔒 Security & Authentication
 - JWT token-based authentication with secure password hashing (`bcryptjs`).
-- "One-Click Guest Demo" mode for instant evaluation without registration.
-- Environment variable protection with zero hardcoded credentials.
+- Clearly labeled **DEMO access** mode ("Enter DEMO Mode") for instant evaluation without registration — loads sample data only and does not create a real user account.
+- Secrets are loaded from environment variables via `.env` (see `.env.example`). Note: `server/middleware/authMiddleware.js` ships with a development-only fallback JWT secret — set a strong `JWT_SECRET` in production. In its default demo configuration the app runs a guest-first experience with a JSON file store; treat it as a portfolio/demo deployment until a real database and strict auth policies are configured.
 
 ---
 
@@ -104,7 +105,7 @@ The business calculation engine (`server/utils/calculator.js` & `client/src/util
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | React 19, Vite, Tailwind CSS / Vanilla Utility System, Lucide Icons, Chart.js |
+| **Frontend** | React 19, Vite, Custom CSS Utility System (no external CSS framework), Lucide Icons |
 | **Backend** | Node.js, Express.js |
 | **Database** | Dual-Mode: MongoDB (Mongoose) + Embedded JSON File Fallback Store |
 | **Authentication** | JSON Web Tokens (JWT), Bcrypt.js |
@@ -129,7 +130,6 @@ Food Production Cost Optimizer/
 │   ├── vite.config.js
 │   └── package.json
 ├── server/                     # Node.js + Express Backend
-│   ├── config/                 # Database Configuration
 │   ├── middleware/             # Auth Middleware & Validation
 │   ├── routes/                 # Express API Endpoint Routes
 │   ├── tests/                  # Backend Unit Tests (`calculator.test.js`)
@@ -196,14 +196,21 @@ Food Production Cost Optimizer/
 |---|---|---|
 | `POST` | `/api/auth/register` | Register a new user account |
 | `POST` | `/api/auth/login` | Authenticate user & return JWT token |
+| `GET` | `/api/auth/me` | Fetch current authenticated user (JWT required) |
 | `POST` | `/api/calculate` | Calculate complete batch economics |
 | `POST` | `/api/whatif/simulate` | Execute side-by-side What-If simulation |
 | `POST` | `/api/optimizer/analyze` | Run algorithmic cost optimization audit |
 | `POST` | `/api/ai/advisor` | Query AI Advisor with structured batch context |
-| `GET` | `/api/batches` | Retrieve saved production batches |
-| `POST` | `/api/batches` | Save a new production batch |
+| `GET` | `/api/batches` | Retrieve saved production batches (JWT required) |
+| `POST` | `/api/batches` | Save a new production batch (JWT required) |
+| `GET` | `/api/batches/:id` | Retrieve a single batch (JWT required) |
+| `PUT` | `/api/batches/:id` | Update a batch (JWT required) |
+| `DELETE` | `/api/batches/:id` | Delete a batch (JWT required) |
+| `POST` | `/api/batches/:id/duplicate` | Clone an existing batch (JWT required) |
 | `GET` | `/api/forecast` | Retrieve time-series cost forecast |
 | `GET` | `/api/suppliers` | Retrieve multi-supplier landed cost comparison |
+| `POST` | `/api/suppliers` | Save a supplier record (JWT required) |
+| `GET` | `/health` | Health check |
 
 ---
 
@@ -212,7 +219,7 @@ Food Production Cost Optimizer/
 ### Frontend Deployment (Vercel / Netlify)
 1. Set Build Command: `npm run build`
 2. Output Directory: `dist`
-3. Set Environment Variable: `VITE_API_URL` pointing to backend API server.
+3. The client calls the backend through the relative `/api` path. In development this is proxied by Vite (`client/vite.config.js`) to `http://localhost:5000`. For production hosting, serve the built `dist/` from the same origin as the API, or configure a reverse proxy / rewrite so that `/api/*` requests are forwarded to the Node backend (which should serve `client/dist` as static files if hosting from one origin).
 
 ### Backend Deployment (Render / Railway)
 1. Root Directory: `server`

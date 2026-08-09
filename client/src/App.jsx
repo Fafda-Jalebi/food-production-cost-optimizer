@@ -34,9 +34,9 @@ export default function App() {
     const savedUser = localStorage.getItem('foodcost_user');
     return savedUser ? JSON.parse(savedUser) : {
       id: 'user_guest',
-      name: 'Guest Operations Manager',
+      name: 'DEMO Guest',
       email: 'guest@demo.com',
-      companyName: 'Demo Foods Corp'
+      companyName: 'Demo Foods Corp (Sample Data)'
     };
   });
   const [token, setToken] = useState(() => localStorage.getItem('foodcost_token') || 'demo_token');

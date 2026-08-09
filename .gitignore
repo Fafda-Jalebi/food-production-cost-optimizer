@@ -22,7 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 logs/
-data/*.json
+**/data/*.json
 
 # IDE & OS files
 .DS_Store

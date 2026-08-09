@@ -56,12 +56,12 @@ router.post('/auth/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Guest mode bypass for rapid testing
+    // DEMO access bypass (sample data only, not a real user account)
     if (email === 'guest@demo.com' && password === 'guest123') {
-      const token = jwt.sign({ id: 'user_guest', email: 'guest@demo.com', name: 'Guest Operations Manager' }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ id: 'user_guest', email: 'guest@demo.com', name: 'DEMO Guest' }, JWT_SECRET, { expiresIn: '7d' });
       return res.json({
         token,
-        user: { id: 'user_guest', name: 'Guest Operations Manager', email: 'guest@demo.com', companyName: 'Demo Foods Corp' }
+        user: { id: 'user_guest', name: 'DEMO Guest', email: 'guest@demo.com', companyName: 'Demo Foods Corp (Sample Data)' }
       });
     }
 
@@ -249,7 +249,12 @@ router.get('/forecast', async (req, res) => {
       sellingPrice: b.sellingPricePerUnit || 0
     }));
 
-    if (records.length < 3) {
+    // A forecast needs a believable monthly history. The built-in demo seed
+    // batches are unrelated products created within days of each other, so fall
+    // back to the labeled Mango Jam sample dataset instead of forecasting from
+    // near-identical dates.
+    const distinctMonths = new Set(records.map(r => (r.date || '').slice(0, 7))).size;
+    if (records.length < 3 || distinctMonths < 3) {
       return res.json({ success: true, data: getSampleForecastData() });
     }
 

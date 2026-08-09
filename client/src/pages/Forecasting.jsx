@@ -30,7 +30,7 @@ export default function Forecasting() {
     fetchForecast();
   }, []);
 
-  const { historicalPoints = [], forecastPoints = [], analytics = {} } = forecastData;
+  const { historicalPoints = [], forecastPoints = [], analytics = {}, isSampleData = false, productName } = forecastData;
 
   const handleExportCSV = () => {
     const rows = [
@@ -58,6 +58,11 @@ export default function Forecasting() {
           <span className="badge badge-cyan text-[10px] mb-1">Time-Series Predictive Analytics</span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Production Cost Forecasting</h1>
           <p className="text-xs text-gray-400">Statistical forecasting utilizing Holt's exponential smoothing and linear trend regression.</p>
+          {isSampleData && (
+            <span className="badge badge-amber text-[10px] mt-2">
+              {productName} — Sample Demo Dataset
+            </span>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -79,6 +84,18 @@ export default function Forecasting() {
           </button>
         </div>
       </div>
+
+      {/* DEMO / Sample Data Notice */}
+      {isSampleData && (
+        <div className="p-3 rounded-lg bg-amber-950/30 border border-amber-500/30 text-amber-100 text-xs flex items-start gap-2">
+          <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-amber-400" />
+          <span>
+            <span className="font-extrabold text-amber-300">DEMO / SAMPLE DATA:</span>{' '}
+            {productName ? `${productName} — ` : ''}
+            {forecastData.description || 'Illustrative monthly history shown for demonstration only. This is not real production data.'}
+          </span>
+        </div>
+      )}
 
       {/* Analytics Summary Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -104,11 +121,13 @@ export default function Forecasting() {
         <div className="card space-y-1">
           <span className="text-xs text-gray-400">Data Source Status</span>
           <div className="flex items-center gap-2">
-            <span className={`badge ${forecastData.isSampleData ? 'badge-amber' : 'badge-emerald'}`}>
-              {forecastData.isSampleData ? 'Sample Industry Demo Dataset' : 'Active Batch History'}
+            <span className={`badge ${isSampleData ? 'badge-amber' : 'badge-emerald'}`}>
+              {isSampleData ? 'Sample Demo Data' : 'Active Batch History'}
             </span>
           </div>
-          <span className="text-[11px] text-gray-500">Clearly labeled estimate projections</span>
+          <span className="text-[11px] text-gray-500">
+            {isSampleData ? (productName ? `${productName} (illustrative demo dataset)` : 'Illustrative demo dataset') : 'Clearly labeled estimate projections'}
+          </span>
         </div>
 
       </div>
@@ -119,9 +138,9 @@ export default function Forecasting() {
           <div>
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-emerald-400" />
-              <span>Historical Unit Production Cost Trend & 6-Month Projections</span>
+              <span>{isSampleData && productName ? `${productName} — ` : ''}Historical Unit Production Cost Trend & 6-Month Projections</span>
             </h3>
-            <p className="text-xs text-gray-400">Actual unit production costs (Historical) vs Projected Future Costs (Confidence Interval)</p>
+            <p className="text-xs text-gray-400">{isSampleData && productName ? `${productName} — actual unit production costs vs projected future costs (sample demo data)` : 'Actual unit production costs (Historical) vs Projected Future Costs (Confidence Interval)'}</p>
           </div>
           <div className="flex items-center gap-4 text-xs font-semibold">
             <span className="flex items-center gap-1 text-emerald-400">

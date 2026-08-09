@@ -126,7 +126,7 @@ export function analyzeAndOptimizeBatch(economics) {
 
   // 5. Scale & Overhead Efficiency
   if (overheadCost > 0 && batchQty < 2000) {
-    const overheadPerUnit = economics.costPerUnit * ((economics.costContributions?.overheadPct || 0) / 100);
+    const overheadPerUnit = (economics.costPerUnit || 0) * ((economics.costContributions?.overheadPct || 0) / 100);
     const scaledBatchQty = batchQty * 2;
     const scaledOverheadPerUnit = overheadPerUnit / 2;
     const savingsPerUnit = overheadPerUnit - scaledOverheadPerUnit;
@@ -156,15 +156,15 @@ export function analyzeAndOptimizeBatch(economics) {
       message: `Current profit margin is below target threshold of 25%. Break-even selling price is ₹${economics.breakEvenSellingPrice}/unit.`
     });
 
-    const targetSellingPrice = round2(economics.costPerUnit / 0.7);
+    const targetSellingPrice = round2((economics.costPerUnit || 0) / 0.7);
     recommendations.push({
       id: 'rec_pricing_opt',
       category: 'Pricing Strategy',
       severity: 'CRITICAL',
-      title: `Adjust Target Selling Price from ₹${economics.sellingPricePerUnit} to ₹${targetSellingPrice}`,
+      title: `Adjust Target Selling Price from ₹${economics.sellingPricePerUnit || 0} to ₹${targetSellingPrice}`,
       impact: `Margin Expansion to 30%`,
-      estimatedSavingsMin: round2((targetSellingPrice - economics.sellingPricePerUnit) * economics.sellableQuantity * 0.5),
-      estimatedSavingsMax: round2((targetSellingPrice - economics.sellingPricePerUnit) * economics.sellableQuantity),
+      estimatedSavingsMin: round2((targetSellingPrice - (economics.sellingPricePerUnit || 0)) * (economics.sellableQuantity || 0) * 0.5),
+      estimatedSavingsMax: round2((targetSellingPrice - (economics.sellingPricePerUnit || 0)) * (economics.sellableQuantity || 0)),
       actionableSteps: [
         `Re-position product messaging to reflect premium quality features.`,
         `Introduce multi-pack value sizes to improve net unit price realization.`

@@ -57,7 +57,7 @@ function analyzeAndOptimizeBatch(economics) {
       type: 'DANGER',
       category: 'Wastage',
       title: `Excessive Process Wastage (${economics.wastagePercentage}%)`,
-      message: `Wastage adds ₹${wastageCost} (${economics.costContributions.wastagePct}% of total cost) to every batch.`
+      message: `Wastage adds ₹${wastageCost} (${economics.costContributions?.wastagePct || 0}% of total cost) to every batch.`
     });
 
     const targetWastagePct = Math.max(2, economics.wastagePercentage - 3);
@@ -80,7 +80,7 @@ function analyzeAndOptimizeBatch(economics) {
   }
 
   // 3. Packaging Cost Efficiency
-  const packagingPct = economics.costContributions.packagingPct;
+  const packagingPct = economics.costContributions?.packagingPct || 0;
   if (packagingPct > 18) {
     flags.push({
       type: 'WARNING',
@@ -105,7 +105,7 @@ function analyzeAndOptimizeBatch(economics) {
   }
 
   // 4. Energy & Utility Intensity
-  const energyPct = economics.costContributions.energyPct;
+  const energyPct = economics.costContributions?.energyPct || 0;
   if (energyPct > 15) {
     flags.push({
       type: 'INFO',
@@ -131,7 +131,7 @@ function analyzeAndOptimizeBatch(economics) {
 
   // 5. Scale & Overhead Efficiency
   if (overheadCost > 0 && batchQty < 2000) {
-    const overheadPerUnit = economics.costPerUnit * (economics.costContributions.overheadPct / 100);
+    const overheadPerUnit = (economics.costPerUnit || 0) * ((economics.costContributions?.overheadPct || 0) / 100);
     const scaledBatchQty = batchQty * 2;
     const scaledOverheadPerUnit = overheadPerUnit / 2;
     const savingsPerUnit = overheadPerUnit - scaledOverheadPerUnit;
@@ -161,15 +161,15 @@ function analyzeAndOptimizeBatch(economics) {
       message: `Current profit margin is below target threshold of 25%. Break-even selling price is ₹${economics.breakEvenSellingPrice}/unit.`
     });
 
-    const targetSellingPrice = round2(economics.costPerUnit / 0.7);
+    const targetSellingPrice = round2((economics.costPerUnit || 0) / 0.7);
     recommendations.push({
       id: 'rec_pricing_opt',
       category: 'Pricing Strategy',
       severity: 'CRITICAL',
-      title: `Adjust Target Selling Price from ₹${economics.sellingPricePerUnit} to ₹${targetSellingPrice}`,
+      title: `Adjust Target Selling Price from ₹${economics.sellingPricePerUnit || 0} to ₹${targetSellingPrice}`,
       impact: `Margin Expansion to 30%`,
-      estimatedSavingsMin: round2((targetSellingPrice - economics.sellingPricePerUnit) * economics.sellableQuantity * 0.5),
-      estimatedSavingsMax: round2((targetSellingPrice - economics.sellingPricePerUnit) * economics.sellableQuantity),
+      estimatedSavingsMin: round2((targetSellingPrice - (economics.sellingPricePerUnit || 0)) * (economics.sellableQuantity || 0) * 0.5),
+      estimatedSavingsMax: round2((targetSellingPrice - (economics.sellingPricePerUnit || 0)) * (economics.sellableQuantity || 0)),
       actionableSteps: [
         `Re-position product messaging to reflect premium quality features.`,
         `Introduce multi-pack value sizes to improve net unit price realization.`
@@ -192,7 +192,7 @@ function analyzeAndOptimizeBatch(economics) {
       healthScore: Math.min(100, Math.max(10, Math.round(100 - (flags.length * 15) + (marginPct > 20 ? 10 : 0)))),
       totalPotentialSavingsMin: round2(totalMinSavings),
       totalPotentialSavingsMax: round2(totalMaxSavings),
-      primaryCostDriver: (economics.costContributions.rawMaterialPct > 50) ? 'Raw Materials' : ((economics.costContributions.labourPct > 25) ? 'Labour' : 'Overheads & Packaging')
+      primaryCostDriver: (economics.costContributions?.rawMaterialPct > 50) ? 'Raw Materials' : ((economics.costContributions?.labourPct > 25) ? 'Labour' : 'Overheads & Packaging')
     }
   };
 }

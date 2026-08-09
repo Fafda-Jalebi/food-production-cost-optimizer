@@ -155,6 +155,26 @@ test('Production Optimization Rules Engine Audit', () => {
   assert.ok(analysis.summary.totalPotentialSavingsMin > 0);
 });
 
+test('Optimizer Engine - Partial/Incomplete Economics Object Does Not Crash', () => {
+  const analysis = analyzeAndOptimizeBatch({ totalProductionCost: 1000 });
+  assert.ok(analysis);
+  assert.ok(Array.isArray(analysis.recommendations));
+  assert.ok(Array.isArray(analysis.flags));
+  assert.ok(analysis.summary.healthScore >= 10);
+  assert.ok(Number.isFinite(analysis.summary.totalPotentialSavingsMin));
+  assert.ok(Number.isFinite(analysis.summary.totalPotentialSavingsMax));
+  analysis.recommendations.forEach(rec => {
+    assert.ok(Number.isFinite(rec.estimatedSavingsMin), rec.id);
+    assert.ok(Number.isFinite(rec.estimatedSavingsMax), rec.id);
+  });
+});
+
+test('Forecast Engine - Empty Records Fall Back to Sample Data', () => {
+  const forecast = generateCostForecast([], 6);
+  assert.equal(forecast.isSampleData, true);
+  assert.equal(forecast.forecastPoints.length, 6);
+});
+
 test('Cost Forecasting Statistical Engine Audit', () => {
   const records = [
     { date: '2025-08-01', costPerUnit: 80, totalProductionCost: 80000, productionQuantity: 1000, rawMaterialCost: 40000, sellingPrice: 120 },
