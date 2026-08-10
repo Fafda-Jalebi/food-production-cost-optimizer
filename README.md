@@ -2,6 +2,8 @@
 
 A full-stack decision-support and analytics platform designed for food manufacturers, production managers, and food technology professionals to calculate, simulate, forecast, and optimize food production costs.
 
+**[🚀 Live Demo](https://food-production-cost-optimizer.onrender.com/)**
+
 ---
 
 ## 🎯 Problem Statement & Executive Overview
