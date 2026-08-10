@@ -281,3 +281,12 @@ input[type="range"]::-webkit-slider-thumb {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-highlight);
 }
+
+/* Hide scrollbars for horizontally-scrollable rows (e.g. mobile navbar sub-nav) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

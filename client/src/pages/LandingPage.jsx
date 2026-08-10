@@ -92,7 +92,7 @@ export default function LandingPage({ onLaunchApp, onSelectPreset }) {
           </div>
 
           {/* Interactive Live Sandbox Preview Card */}
-          <div className="mt-16 bg-gray-900/90 border border-gray-800 rounded-2xl p-6 lg:p-8 shadow-2xl backdrop-blur-xl relative">
+          <div className="mt-16 bg-gray-900/90 border border-gray-800 rounded-2xl p-6 lg:p-8 shadow-2xl backdrop-blur-xl relative w-full max-w-full min-w-0">
             <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6">
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-rose-500" />
@@ -103,10 +103,10 @@ export default function LandingPage({ onLaunchApp, onSelectPreset }) {
               <span className="badge badge-emerald">Instant Calculation</span>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-w-0">
               
               {/* Controls Column */}
-              <div className="lg:col-span-6 space-y-5">
+              <div className="lg:col-span-6 space-y-5 min-w-0">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
                   <Sliders className="w-5 h-5 text-emerald-400" />
                   <span>Adjust Batch Parameters</span>
@@ -174,46 +174,46 @@ export default function LandingPage({ onLaunchApp, onSelectPreset }) {
               </div>
 
               {/* Live Output Metrics */}
-              <div className="lg:col-span-6 bg-gray-950/80 border border-gray-800 rounded-xl p-6 space-y-4">
-                <div className="flex items-center justify-between border-b border-gray-800 pb-3">
-                  <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Calculated Metrics</span>
-                  <span className="text-xs text-emerald-400 font-mono">100% Real-Time</span>
+              <div className="lg:col-span-6 bg-gray-950/80 border border-gray-800 rounded-xl p-6 space-y-4 w-full min-w-0 max-w-full">
+                <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-gray-800 pb-3 min-w-0">
+                  <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider whitespace-nowrap">Calculated Metrics</span>
+                  <span className="text-xs text-emerald-400 font-mono whitespace-nowrap">100% Real-Time</span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-900/60 p-3 rounded-lg border border-gray-800">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 min-w-0">
+                  <div className="bg-gray-900/60 p-2.5 sm:p-3 rounded-lg border border-gray-800 min-w-0 overflow-hidden">
                     <span className="text-[11px] text-gray-400 block">Total Batch Cost</span>
-                    <span className="text-xl font-extrabold text-white">{formatCurrency(quickEconomics.totalProductionCost)}</span>
+                    <span className="text-sm sm:text-xl font-extrabold text-white block break-words">{formatCurrency(quickEconomics.totalProductionCost)}</span>
                   </div>
 
-                  <div className="bg-gray-900/60 p-3 rounded-lg border border-gray-800">
+                  <div className="bg-gray-900/60 p-2.5 sm:p-3 rounded-lg border border-gray-800 min-w-0 overflow-hidden">
                     <span className="text-[11px] text-gray-400 block">Cost Per Sellable Unit</span>
-                    <span className="text-xl font-extrabold text-emerald-400">₹{quickEconomics.costPerUnit} / kg</span>
+                    <span className="text-sm sm:text-xl font-extrabold text-emerald-400 block break-words">₹{quickEconomics.costPerUnit} / kg</span>
                   </div>
 
-                  <div className="bg-gray-900/60 p-3 rounded-lg border border-gray-800">
+                  <div className="bg-gray-900/60 p-2.5 sm:p-3 rounded-lg border border-gray-800 min-w-0 overflow-hidden">
                     <span className="text-[11px] text-gray-400 block">Gross Profit</span>
-                    <span className={`text-xl font-extrabold ${quickEconomics.grossProfit >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    <span className={`text-sm sm:text-xl font-extrabold block break-words ${quickEconomics.grossProfit >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                       {formatCurrency(quickEconomics.grossProfit)}
                     </span>
                   </div>
 
-                  <div className="bg-gray-900/60 p-3 rounded-lg border border-gray-800">
+                  <div className="bg-gray-900/60 p-2.5 sm:p-3 rounded-lg border border-gray-800 min-w-0 overflow-hidden">
                     <span className="text-[11px] text-gray-400 block">Gross Margin %</span>
-                    <span className={`text-xl font-extrabold ${quickEconomics.profitMarginPercentage >= 20 ? 'text-emerald-400' : (quickEconomics.profitMarginPercentage > 0 ? 'text-amber-400' : 'text-rose-400')}`}>
+                    <span className={`text-sm sm:text-xl font-extrabold block break-words ${quickEconomics.profitMarginPercentage >= 20 ? 'text-emerald-400' : (quickEconomics.profitMarginPercentage > 0 ? 'text-amber-400' : 'text-rose-400')}`}>
                       {quickEconomics.profitMarginPercentage}%
                     </span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/20 text-xs text-gray-300 flex items-center justify-between">
-                  <span className="text-gray-400">Break-Even Selling Price:</span>
-                  <span className="font-bold text-white">₹{quickEconomics.breakEvenSellingPrice} / kg</span>
+                <div className="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/20 text-xs text-gray-300 flex items-center justify-between gap-2 min-w-0">
+                  <span className="text-gray-400 min-w-0 break-words">Break-Even Selling Price:</span>
+                  <span className="font-bold text-white whitespace-nowrap">₹{quickEconomics.breakEvenSellingPrice} / kg</span>
                 </div>
 
                 <button
                   onClick={() => onLaunchApp('whatif')}
-                  className="w-full btn btn-primary text-xs py-2.5"
+                  className="w-full btn btn-primary text-xs py-2.5 whitespace-nowrap"
                 >
                   Open Full What-If Simulator &rarr;
                 </button>
