@@ -18,7 +18,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
 
   return (
     <header className="glass-header sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
           {/* Brand Logo */}
@@ -41,7 +41,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           </div>
 
           {/* Navigation Links (Desktop) */}
-          <nav className="hidden xl:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-xl border border-gray-800 min-w-0">
+          <nav className="hidden 2xl:flex items-center gap-1 bg-gray-900/60 p-1.5 rounded-xl border border-gray-800 min-w-0 flex-1 justify-center">
             <button
               onClick={() => setActiveTab('landing')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
@@ -75,7 +75,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
           </nav>
 
           {/* User Profile / Auth Action */}
-          <div className="flex items-center gap-3 shrink-0 ml-auto">
+          <div className="flex items-center gap-3 shrink-0">
             {user ? (
               <div className="flex items-center gap-2">
                 <div className="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-gray-800/80 border border-gray-700 text-xs max-w-[240px]">
@@ -109,7 +109,7 @@ export default function Navbar({ activeTab, setActiveTab, user, onOpenAuth, onLo
       </div>
 
       {/* Mobile Horizontal Sub-Navbar */}
-      <div className="xl:hidden flex items-center gap-2 px-4 py-2 bg-gray-900 border-t border-gray-800 overflow-x-auto no-scrollbar">
+      <div className="2xl:hidden flex items-center gap-2 px-4 py-2 bg-gray-900 border-t border-gray-800 overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveTab('landing')}
           className={`flex items-center gap-1 px-3 py-1 rounded-md text-xs font-semibold shrink-0 ${
